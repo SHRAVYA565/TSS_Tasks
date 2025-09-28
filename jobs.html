@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Jobs</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body, html {
+      height: 100%;
+      background-color: #f0f2f5;
+    }
+
+    /* Sliding sidebar */
+    nav {
+      position: fixed;
+      left: -240px;
+      top: 0;
+      width: 240px;
+      height: 100%;
+      background-color: #1a1a1a;
+      color: white;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      overflow-x: hidden;
+      z-index: 1000;
+    }
+    nav.active {
+      left: 0;
+    }
+    nav a, nav button {
+      display: block;
+      padding: 14px 22px;
+      color: white;
+      text-decoration: none;
+      border: none;
+      background: none;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 10px 0;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      text-align: left;
+    }
+    nav a:hover, nav button:hover {
+      background-color: #333333;
+    }
+    #menuToggle {
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      background-color: #0069d9;
+      border: none;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1100;
+      transition: background-color 0.3s ease;
+    }
+    #menuToggle:hover {
+      background-color: #004a99;
+    }
+    button#logoutBtn {
+      background-color: #dc3545;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 30px 20px 0 20px;
+      width: calc(100% - 40px);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      border: none;
+    }
+    button#logoutBtn:hover {
+      background-color: #b02a37;
+      transform: scale(1.05);
+    }
+    button#logoutBtn:active {
+      transform: scale(0.95);
+    }
+
+    /* Main container */
+    main {
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+      padding: 40px 30px;
+      min-height: 100vh;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      background: #f0f2f5;
+    }
+    nav.active ~ main {
+      margin-left: 240px;
+    }
+
+    /* Square job cards */
+    .card {
+      background: white;
+      width: 320px;
+      height: 320px; /* Square shape */
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      color: #222;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      cursor: default;
+      position: relative;
+    }
+    .card:hover {
+      box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+      transform: translateY(-10px);
+    }
+    .card h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .card p.location {
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #666;
+    }
+
+    /* Color themes reused */
+    .theme-blue { border-left: 6px solid #4A90E2; }
+    .theme-purple { border-left: 6px solid #9B59B6; }
+    .theme-orange { border-left: 6px solid #E67E22; }
+
+    /* Know More button */
+    .knowMoreBtn {
+      align-self: flex-start;
+      background-color: #3498db;
+      color: white;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .knowMoreBtn:hover {
+      background-color: #2980b9;
+    }
+
+    /* Modal Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    /* Modal content */
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .modal-content p {
+      margin-bottom: 20px;
+      line-height: 1.4;
+      color: #555;
+    }
+
+    .modal-content a.apply-link {
+      display: inline-block;
+      background-color: #27ae60;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .modal-content a.apply-link:hover {
+      background-color: #1e8449;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      font-size: 1.8rem;
+      color: #888;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover {
+      color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="menuToggle">☰ Menu</button>
+  <nav id="sideNav">
+    <a href="dashboard.html">Dashboard</a>
+    <a href="events.html">Events</a>
+    <a href="jobs.html">Jobs</a>
+    <button id="logoutBtn">Logout</button>
+  </nav>
+
+  <main>
+    <div class="card theme-blue">
+      <h2>Software Engineer</h2>
+      <p class="location">New York, NY</p>
+      <button class="knowMoreBtn" data-job="0">Know More</button>
+    </div>
+
+    <div class="card theme-purple">
+      <h2>Data Scientist</h2>
+      <p class="location">San Francisco, CA</p>
+      <button class="knowMoreBtn" data-job="1">Know More</button>
+    </div>
+
+    <div class="card theme-orange">
+      <h2>Product Manager</h2>
+      <p class="location">Austin, TX</p>
+      <button class="knowMoreBtn" data-job="2">Know More</button>
+    </div>
+  </main>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-content" id="modalContent">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDescription"></p>
+      <a href="#" id="modalApply" class="apply-link" target="_blank" rel="noopener">Apply Now</a>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
+  <script>
+    // Firebase config (replace with your details)
+    const firebaseConfig = {
+  apiKey: "AIzaSyCFjQ6HMxp8tzBdmLUSSH_K7FUBQFEKFCw",
+  authDomain: "task1-tss.firebaseapp.com",
+  projectId: "task1-tss",
+  storageBucket: "task1-tss.firebasestorage.app",
+  messagingSenderId: "921753663628",
+  appId: "1:921753663628:web:f4621f2501a3bdd16e23a9"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    const menuToggle = document.getElementById('menuToggle');
+    const sideNav = document.getElementById('sideNav');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    menuToggle.addEventListener('click', () => {
+      sideNav.classList.toggle('active');
+    });
+
+    auth.onAuthStateChanged(user => {
+      if (!user) {
+        window.location.href = 'index.html';
+      }
+    });
+
+    logoutBtn.addEventListener('click', () => {
+      auth.signOut().then(() => {
+        window.location.href = 'index.html';
+      });
+    });
+
+    // Job details data
+    const jobDetails = [
+      {
+        title: "Software Engineer",
+        description: "We are looking for a skilled Software Engineer proficient in full stack development, cloud technologies, and agile methodologies.",
+        applyLink: "https://example.com/apply/software-engineer"
+      },
+      {
+        title: "Data Scientist",
+        description: "Seeking a Data Scientist experienced with machine learning models, analytics, and big data tools.",
+        applyLink: "https://example.com/apply/data-scientist"
+      },
+      {
+        title: "Product Manager",
+        description: "Hiring a Product Manager to lead innovative product development with strong communication and leadership skills.",
+        applyLink: "https://example.com/apply/product-manager"
+      }
+    ];
+
+    // Modal elements
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalApply = document.getElementById('modalApply');
+    const modalClose = document.getElementById('modalClose');
+
+    // Open modal on Know More click
+    document.querySelectorAll('.knowMoreBtn').forEach(button => {
+      button.addEventListener('click', () => {
+        const index = button.getAttribute('data-job');
+        const job = jobDetails[index];
+        modalTitle.textContent = job.title;
+        modalDescription.textContent = job.description;
+        modalApply.href = job.applyLink;
+        modalOverlay.classList.add('active');
+      });
+    });
+
+    // Close modal functionality
+    modalClose.addEventListener('click', () => {
+      modalOverlay.classList.remove('active');
+    });
+    modalOverlay.addEventListener('click', e => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>

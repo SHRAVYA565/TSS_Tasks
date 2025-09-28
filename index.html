@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home - My Website</title>
+  <style>
+    /* Reset & base */
+    * {
+       padding: 0; box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    html, body {
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  background: 
+        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+        url('https://images.pexels.com/photos/66997/pexels-photo-66997.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500') no-repeat center center fixed;
+      background-size: cover;
+      
+  overflow-x: hidden;
+}
+
+      
+
+    /* Navigation bar visible and fixed at top */
+    nav {
+      width: 100%;
+      padding: 20px 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: flex-end;
+      gap: 30px;
+      background-color: rgba(0,0,0,0.35);
+      z-index: 1000;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.7);
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+    }
+    nav a {
+      color: #d1e8ff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    nav a:hover {
+      background-color: rgba(209, 232, 255, 0.3);
+    }
+
+    /* Login button fixed top right */
+    #googleLoginBtn {
+      background-color: #4285F4;
+      padding: 10px 24px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      color: white;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      font-size: 1rem;
+    }
+    #googleLoginBtn:hover {
+      background-color: #357ae8;
+      transform: scale(1.05);
+    }
+
+    /* Welcome message central, scrollable below nav */
+    main {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  min-height: 100vh;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+}
+
+    main h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+      text-align: center;
+      text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.7);
+    }
+    /* Placeholder for future images & description */
+    .content-section {
+      margin-bottom: 50px;
+      color: #e2eafc;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .glide-section {
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  overflow: hidden;
+  position: relative;
+}
+
+.glide-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  width: 80vw;
+  max-width: 1300px;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 1.2s cubic-bezier(0.4,0.2,0.2,1), transform 1.2s cubic-bezier(0.4,0.2,0.2,1);
+  border-radius: 25px;
+  background: rgba(0,0,0,0.35);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+  padding: 60px 30px;
+}
+
+.glide-content.glide-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.glide-content.left img {
+  margin-right: 36px;
+}
+
+.glide-content.right {
+  flex-direction: row-reverse;
+}
+
+.glide-content.right img {
+  margin-left: 36px;
+}
+
+.glide-content img {
+  width: 40vw;
+  max-width: 520px;
+  height: 60vh;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.20);
+}
+
+.glide-content h1 {
+  color: #fafcff;
+  font-size: 2.7rem;
+  margin-bottom: 14px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.glide-content p {
+  color: #e2eafc;
+  font-size: 1.3rem;
+  line-height: 1.4;
+  max-width: 470px;
+}
+
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="about.html">About Us</a>
+    <a href="contact.html">Contact Us</a>
+    <a href="events.html">Events</a>
+    <a href="jobs.html">Jobs</a>
+    <button id="googleLoginBtn">Login with Google</button>
+  </nav>
+
+  <main>
+    <h1>Welcome to Home Page</h1>  
+    <div class="content-section">
+      <!-- You can add your scrolling images & descriptions here later -->
+      <p>Explore upcoming events and job opportunities tailored for you!</p>
+      <p>Login to discover more!!!</p>
+    </div>
+  <section class="glide-section">
+    <div class="glide-content left">
+    <img src="https://media.licdn.com/dms/image/v2/D560BAQG7X76GAzC6oA/company-logo_200_200/company-logo_200_200/0/1731410980852?e=2147483647&v=beta&t=s73bbHwHYfAfEkO-HlVASkj_-pzqljV0AxP3oqrkqKg" alt="Sky 1" />
+
+      <div>
+        <h1>Title 1</h1>
+        <p>Description 1</p>
+      </div>
+    </div>
+  </section>
+  <section class="glide-section">
+    <div class="glide-content right">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIIvQOu37k2IbGuKxE0jnyfL5qLiHVquV0qA&s" alt="Sky 2" />
+      <div>
+        <h1>Title 2</h1>
+        <p>Description 2</p>
+      </div>
+    </div>
+  </section>
+  <section class="glide-section">
+    <div class="glide-content left">
+    <img src="https://thumbs.dreamstime.com/b/community-banner-diverse-crowd-cartoon-people-standing-talking-community-banner-diverse-crowd-cartoon-people-standing-169602861.jpg" alt="Sky 3" />
+      <div>
+        <h1>Title 3</h1>
+        <p>Description 3</p>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyCFjQ6HMxp8tzBdmLUSSH_K7FUBQFEKFCw",
+  authDomain: "task1-tss.firebaseapp.com",
+  projectId: "task1-tss",
+  storageBucket: "task1-tss.firebasestorage.app",
+  messagingSenderId: "921753663628",
+  appId: "1:921753663628:web:f4621f2501a3bdd16e23a9"
+};
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    document.getElementById('googleLoginBtn').addEventListener('click', () => {
+      auth.signInWithPopup(provider).then(() => {
+        window.location.href = 'dashboard.html';
+      }).catch(err => alert(err.message));
+    });
+
+    // Auto redirect logged-in user to dashboard
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        window.location.href = 'dashboard.html';
+      }
+    });
+    function onScrollGlideIn() {
+  document.querySelectorAll('.glide-content').forEach(content => {
+    const rect = content.getBoundingClientRect();
+    if (rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.1) {
+      content.classList.add('glide-in');
+    }
+  });
+}
+window.addEventListener('scroll', onScrollGlideIn);
+window.addEventListener('load', onScrollGlideIn);
+
+  </script>
+
+</body>
+</html>
